@@ -22,7 +22,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt install ffmpeg
+        sudo apt update
+        sudo apt install -y ffmpeg
         pip install -r requirements.txt
 
     - name: Lint Code
@@ -49,7 +50,8 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        sudo apt install ffmpeg
+        sudo apt update
+        sudo apt install -y ffmpeg
         pip install --upgrade pip
         pip install -e .
         pip install -r requirements.txt
