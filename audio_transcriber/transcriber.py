@@ -1,20 +1,18 @@
 import os
-import argparse
 import time
-from datetime import timedelta
 import whisper
+import argparse
+from datetime import timedelta
 
+# Define a constant for supported file pformats
 # Define a constant for supported file formats
-# Define a constant for supported file formats
-SUPPORTED_FORMATS = [".mp3", ".mp4", ".m4a", ".ogg", ".mkv"]
+SUPPORTED_FORMATS = [".mp3", ".mp4", ".mkv"]
 
 
-def transcribe_audio(input_path, model_size, output_format="srt", language="pt"):
+def transcribe_audio(input_path, model_size, language="pt"):
     """
     Transcribe an audio or video file using Whisper.
     """
-
-    start_time = time.time()
     print(f"Loading Whisper model '{model_size}'...")
     model = whisper.load_model(model_size)
 
@@ -24,19 +22,28 @@ def transcribe_audio(input_path, model_size, output_format="srt", language="pt")
     options = {"language": language}
 
     # Handle .mkv files
-    if input_path.endswith(".mkv"):
-        # Temporary audio file path
-        temp_audio_path = "temp.wav"
+    if not input_path.endswith(".mkv"):
+        return model.transcribe(input_path, **options)
 
-        # Extract audio from the .mkv file using ffmpeg
-        os.system(
-            f"ffmpeg -i {input_path} -vn -acodec pcm_s16le -ar 44100 -ac 2 {temp_audio_path}"
-        )
+    # Temporary audio file path
+    temp_audio_path = "temp.wav"
 
-        # Transcribe the extracted audio
-        result = model.transcribe(temp_audio_path, **options)
-    else:
-        result = model.transcribe(input_path, **options)
+    # Extract audio from the .mkv file using ffmpeg
+    os.system(
+        f"ffmpeg -i {input_path} -vn -acodec pcm_s16le -ar 44100 -ac 2 {temp_audio_path}"
+    )
+
+    # Transcribe the extracted audio
+    return model.transcribe(temp_audio_path, **options)
+
+
+def transcribe_and_save(input_path, model_size, output_format="srt", language="pt"):
+    start_time = time.time()
+
+    result = transcribe_audio(input_path, model_size, language)
+
+    # Save the transcription to a file
+    print(f"Saving transcription to {input_path}.{output_format}...")
 
     if output_format == "srt":
         with open(input_path + ".srt", "w", encoding="utf-8") as file:
