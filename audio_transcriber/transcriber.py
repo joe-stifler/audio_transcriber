@@ -71,7 +71,7 @@ def transcribe_directory(directory_path, model_size, output_format, language):
             os.path.isfile(file_path)
             and os.path.splitext(file_path)[1].lower() in SUPPORTED_FORMATS
         ):
-            transcribe_audio(file_path, model_size, output_format, language)
+            transcribe_and_save(file_path, model_size, output_format, language)
 
 
 def main():
@@ -117,7 +117,7 @@ def main():
                 f"Unsupported file format: {file_extension}. Supported formats are: {', '.join(SUPPORTED_FORMATS)}."
             )
             return
-        transcribe_audio(args.file_path, args.model, args.output_format, args.language)
+        transcribe_and_save(args.file_path, args.model, args.output_format, args.language)
         print(f"Output file: {args.file_path}.{args.output_format}")
     else:
         print("Error: The specified path is neither a file nor a directory.")
