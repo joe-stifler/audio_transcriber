@@ -36,6 +36,7 @@ jobs:
   
       - name: Install Dependencies
         run: |
+          sudo apt install ffmpeg
           pip install -e .
           pip install -r requirements.txt
 
