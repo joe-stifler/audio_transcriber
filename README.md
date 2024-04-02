@@ -2,6 +2,24 @@
 
 Audio Transcriber is toy wrapper around openai-whisper library, primary created to expose a simple terminal client to convert and transcribe audio files.
 
+## Requirements
+
+add the ffmpeg as one of the requirements followed by a install command in ubuntu
+
+* **ffmpeg:**
+```bash
+    sudo apt-get install ffmpeg
+```
+
+* **[openai-whisper](https://github.com/openai/whisper)** and other python dependencies:
+
+
+```bash
+    conda env create -f environment.yml
+    conda activate audio_transcriber
+    pip install -r requirements.txt
+```
+
 ## Installation
 
 To install Audio Transcriber, run:
