@@ -1,13 +1,13 @@
 # Audio Transcriber
 
-Audio Transcriber is a Python library for converting and transcribing audio and video files, leveraging the whisper library to extract speech from audio and video files.
+Audio Transcriber is toy wrapper around openai-whisper library, primary created to expose a simple terminal client to convert and transcribe audio files.
 
 ## Installation
 
 To install Audio Transcriber, run:
 
 ```bash
-    pip install .
+    pip install -e .
 ```
 
 # Usage
@@ -30,7 +30,7 @@ from audio_transcriber.transcriber import convert_audio, transcribe_audio
 convert_audio('path/to/your_file.mp4', 'path/to/output_file.mp3')
 
 # Transcribe the audio file to text
-transcribe_audio('path/to/output_file.mp3', output_format='srt')
+transcribe_audio('path/to/output_file.mp3')
 ```
 
 # Configuration
